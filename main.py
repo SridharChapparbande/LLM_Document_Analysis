@@ -4,15 +4,15 @@ pdf_path = "D:/Projects/LLM/Document Analysis/google_terms_of_service_en_in.pdf"
 
 output_text_file = "extracted_text.txt"
 
-# with pdfplumber.open(pdf_path) as pdf:
-#     extracted_text = ""
-#     for page in pdf.pages:
-#         extracted_text += page.extract_text()
+with pdfplumber.open(pdf_path) as pdf:
+    extracted_text = ""
+    for page in pdf.pages:
+        extracted_text += page.extract_text()
 
-# with open(output_text_file, "w", encoding="utf-8") as text_file:
-#     text_file.write(extracted_text)
+with open(output_text_file, "w", encoding="utf-8") as text_file:
+    text_file.write(extracted_text)
 
-# print(f"Text extracted and saved to {output_text_file}")
+print(f"Text extracted and saved to {output_text_file}")
 
 # reading pdf content
 with open(r"D:\Projects\LLM\Document Analysis\extracted_text.txt", "r",encoding="utf-8") as file:
@@ -24,12 +24,12 @@ print(document_text[:500])
 
 from transformers import pipeline
 
-# # load the summarization pipeline
-# summarizer = pipeline("summarization", model="t5-small")
+# load the summarization pipeline
+summarizer = pipeline("summarization", model="t5-small")
 
-# # summarize the document text (you can summarize parts if the document is too large)
-# summary = summarizer(document_text[:1000], max_length=150, min_length=30, do_sample=False)
-# print("Summary:", summary[0]['summary_text'])
+# summarize the document text (you can summarize parts if the document is too large)
+summary = summarizer(document_text[:1000], max_length=150, min_length=30, do_sample=False)
+print("Summary:", summary[0]['summary_text'])
 
 import nltk
 nltk.download('punkt')
@@ -51,21 +51,6 @@ for sentence in sentences:
 if current_passage:
     passages.append(current_passage.strip())
 
-
-# load the question generation pipeline
-# qg_pipeline = pipeline("text2text-generation", model="valhalla/t5-base-qg-hl")
-# qg_pipeline = pipeline(
-#     "text2text-generation",
-#     model="valhalla/t5-base-qg-hl",
-#     tokenizer="valhalla/t5-base-qg-hl",
-#     use_fast=False  # 👈 important
-# )
-# qg_pipeline = pipeline(
-#     "text2text-generation",
-#     model="mrm8488/t5-base-finetuned-question-generation-ap",
-#     tokenizer="mrm8488/t5-base-finetuned-question-generation-ap",
-#     use_fast=False
-# )
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, pipeline
 
 model_name = "valhalla/t5-base-qg-hl"
