@@ -1,0 +1,7 @@
+blobfile
+tiktoken
+nltk
+torch
+transformers
+pdfplumber
+
